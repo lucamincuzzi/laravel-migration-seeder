@@ -1,5 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Welcome to laravel</h1>
+    <ul>
+        @foreach ($trains as $train)
+            <li>
+                {{ $train->azienda }}
+                {{ $train->codice_treno }}
+                {{ $train->stazione_partenza }}
+                {{ $train->stazione_partenza }}
+                {{ $train->orario_partenza }}
+                {{ $train->orario_arrivo }}
+                {{ $train->cancellato }}
+            </li>
+        @endforeach
+    </ul>
 @endsection

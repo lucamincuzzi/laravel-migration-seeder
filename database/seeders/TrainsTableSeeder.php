@@ -16,11 +16,9 @@ class TrainsTableSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
-        $_orario_partenza = $faker->dateTimeBetween('0 day', '+1 week');
-        $_nome_azienda = $faker->randomElement(['Trenitalia', 'Italo', 'ITrenì']);
-
-        function codiceTreno($_nome_azienda) {
-            if($_nome_azienda === 'Trenitalia') {
+        function codiceTreno($_nome_azienda)
+        {
+            if ($_nome_azienda === 'Trenitalia') {
                 return '######';
             } elseif ($_nome_azienda === 'Italo') {
                 return '####';
@@ -29,17 +27,22 @@ class TrainsTableSeeder extends Seeder
             }
         };
 
-        $train = new Train();
-        $train->azienda = $_nome_azienda;
-        $train->stazione_di_partenza = $faker->word();
-        $train->stazione_di_arrivo = $faker->word();
-        $train->orario_partenza = $_orario_partenza;
-        $train->orario_arrivo = $faker->dateTimeBetween($_orario_partenza, '+1 week');
-        $train->codice_treno = $faker->numerify(codiceTreno($_nome_azienda));
-        $train->n_carrozze = $faker->numberBetween(5, 7);
-        $train->in_orario = $faker->numberBetween(0, 1);
-        $train->cancellato = $faker->numberBetween(0, 1);
+        for ($i = 0; $i < 50; $i++) {
+            $_orario_partenza = $faker->dateTimeBetween('0 day', '+1 week');
+            $_nome_azienda = $faker->randomElement(['Trenitalia', 'Italo', 'ITrenì']);
 
-        $train->save();
+            $train = new Train();
+            $train->azienda = $_nome_azienda;
+            $train->stazione_di_partenza = $faker->word();
+            $train->stazione_di_arrivo = $faker->word();
+            $train->orario_partenza = $_orario_partenza;
+            $train->orario_arrivo = $faker->dateTimeBetween($_orario_partenza, '+1 week');
+            $train->codice_treno = $faker->numerify(codiceTreno($_nome_azienda));
+            $train->n_carrozze = $faker->numberBetween(5, 7);
+            $train->in_orario = $faker->numberBetween(0, 1);
+            $train->cancellato = $faker->numberBetween(0, 1);
+
+            $train->save();
+        }
     }
 }
